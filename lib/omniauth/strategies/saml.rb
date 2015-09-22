@@ -48,6 +48,7 @@ module OmniAuth
         
         response_options = options.response_options.clone
         response_options[:settings] = OneLogin::RubySaml::Settings.new(options)
+        puts "response_options = #{response_options}"
         response = OneLogin::RubySaml::Response.new(request.params['SAMLResponse'], response_options)
         response.settings = OneLogin::RubySaml::Settings.new(options)
         response.attributes['fingerprint'] = options.idp_cert_fingerprint

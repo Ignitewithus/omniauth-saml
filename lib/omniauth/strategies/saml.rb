@@ -45,9 +45,10 @@ module OmniAuth
           # id_cert_fingerprint becomes the given fingerprint if it exists
           options.idp_cert_fingerprint = fingerprint_exists
         end
-
-        settings = OneLogin::RubySaml::Settings.new(options)
-        response = OneLogin::RubySaml::Response.new(request.params['SAMLResponse'], { settings: settings })
+        
+        response_options = options.response_options.clone
+        response_options[:settings] = OneLogin::RubySaml::Settings.new(options)
+        response = OneLogin::RubySaml::Response.new(request.params['SAMLResponse'], response_options)
         response.settings = OneLogin::RubySaml::Settings.new(options)
         response.attributes['fingerprint'] = options.idp_cert_fingerprint
 
